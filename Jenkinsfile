@@ -1,7 +1,23 @@
-echo "# jenkins-revision" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/mohammedsulaimana9-git/jenkins-revision.git
-git push -u origin main
+pipeline {
+    agent { label 'test' }
+
+
+
+    stages {
+
+        stage('Checkout scm ') {
+            steps 
+	    { checkout scm 
+            }
+        }
+
+        stage('Run App') {
+            steps {
+                sh '''
+                node -v || sudo apt install nodejs -y
+                node app.js
+                '''
+            }
+        }
+    }
+}
